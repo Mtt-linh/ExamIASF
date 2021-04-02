@@ -54,16 +54,22 @@ public String createProduct(@ModelAttribute Product p) {
         return "redirect:/product/list";
     }
 
-    @RequestMapping(path = "/product/edit/{id}", method = RequestMethod.GET)
-    public String editProduct(@PathVariable int id, Model model) {
-        Optional<Product> optionalProduct = productModel.findById(id);
-        if (optionalProduct.isPresent()) {
-            model.addAttribute("product", optionalProduct.get());
-            return "product-form";
-        } else {
-            return "not-found";
-        }
-    }
+//    @RequestMapping(path = "/product/edit/{id}", method = RequestMethod.GET)
+//    public String editProduct(@PathVariable int id, Model model) {
+//        Optional<Product> optionalProduct = productModel.findById(id);
+//        if (optionalProduct.isPresent()) {
+//            model.addAttribute("product", optionalProduct.get());
+//            return "product-form";
+//        } else {
+//            return "not-found";
+//        }
+//    }
+@RequestMapping(value = "/product/edit",method = RequestMethod.GET)
+public String editProduct(@RequestParam("id") int id,Model model){
+    Optional<Product> productEdit = productModel.findById(id);
+    productEdit.ifPresent(product -> model.addAttribute("product",product));
+    return "product-form-edit";
+}
 
     @RequestMapping(path = "/product/delete/{id}", method = RequestMethod.POST)
     public String deleteProduct(@PathVariable int id) {

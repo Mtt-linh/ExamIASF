@@ -12,4 +12,3 @@ Page<Product> findByNameAndPrice(String name, int price, Pageable pageable);
     List<Product> findDistinctByName(String name);
 
 }
-//PagingAndSortingRepository
