@@ -1,5 +1,5 @@
 package com.example.SpringCRUDUpdate.service;
-
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,25 +8,27 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
+@Service
 
-import java.util.logging.Logger;
-
-public class SecurityServicelmpl implements  SecurityService {
+public class SecurityServicelmpl implements SecurityService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    @Qualifier ("userDetailsServiceImpl")
+    @Qualifier("userDetailsServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
     private static final Logger logger = LoggerFactory.getLogger(SecurityServicelmpl.class);
+
     @Override
     public String findLoggedInUsername() {
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if (userDetails instanceof UserDetails) {
-            return ((UserDetails)userDetails).getUsername();
+            return ((UserDetails) userDetails).getUsername();
         }
         return null;
     }
+
     @Override
     public void autoLogin(String username, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -39,5 +41,4 @@ public class SecurityServicelmpl implements  SecurityService {
             logger.debug(String.format("Auto login %s successfully!", username));
         }
     }
-
 }

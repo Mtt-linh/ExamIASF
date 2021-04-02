@@ -41,7 +41,7 @@
                         <td class="col-md-2" th:text="${product.price}"></td>
                         <td class="col-md-2" th:text="${product.createdTime}"></td>
                         <td class="col-md-2">
-                            <a class="btn-link mr-2" href="#">Edit</a>
+                            <a class="btn-link mr-2" th:href="@{/product/edit?id={id}(id=${product.id})}">Edit</a>
                             <a class="btn-link btn-delete-product" href="#">Delete</a>
                         </td>
                     </tr>

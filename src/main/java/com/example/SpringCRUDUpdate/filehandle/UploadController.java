@@ -13,10 +13,12 @@ import java.nio.file.Paths;
 
 public class UploadController {
     private static String UPLOADED_FOLDER = "target/classes/static/uploaded/";
+
     @GetMapping("/")
     public String index() {
         return "upload";
     }
+
     @PostMapping("/upload")
     public String singleFileUpload(@RequestParam("myImg") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {

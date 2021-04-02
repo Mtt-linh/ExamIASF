@@ -25,25 +25,27 @@ import java.util.Optional;
 @Controller
 public class ProductController {
     private static String UPLOADED_FOLDER = "target/classes/static/uploaded/";
-@Autowired
+    @Autowired
     private ProductModel productModel;
-@Autowired
-    private ProductModel2 productModel2 ;
-@RequestMapping(path = "/product/create", method = RequestMethod.GET)
-public String createProduct(@ModelAttribute Product p) {
-    return "product-form";
-}
+    @Autowired
+    private ProductModel2 productModel2;
 
-    @RequestMapping(path = "/product/create", method = RequestMethod.POST)
+    @RequestMapping(path = "/product/create", method = RequestMethod.GET)
+    public String createProduct(@ModelAttribute Product p) {
+        return "product-form";
+    }
+
+    @RequestMapping(path = "/product/save", method = RequestMethod.POST)
     public String saveProduct(@Valid Product product, BindingResult result,
                               @RequestParam("myFile") MultipartFile myFile) {
         product.setImgUrl("_");
-        new  ProductValidator().validate(product,result);
+        new ProductValidator().validate(product, result);
 
         if (result.hasErrors()) {
             return "product-form";
         }
         try {
+
             Path path = Paths.get(UPLOADED_FOLDER + myFile.getOriginalFilename());
             Files.write(path, myFile.getBytes());
         } catch (IOException ex) {
@@ -54,22 +56,13 @@ public String createProduct(@ModelAttribute Product p) {
         return "redirect:/product/list";
     }
 
-//    @RequestMapping(path = "/product/edit/{id}", method = RequestMethod.GET)
-//    public String editProduct(@PathVariable int id, Model model) {
-//        Optional<Product> optionalProduct = productModel.findById(id);
-//        if (optionalProduct.isPresent()) {
-//            model.addAttribute("product", optionalProduct.get());
-//            return "product-form";
-//        } else {
-//            return "not-found";
-//        }
-//    }
-@RequestMapping(value = "/product/edit",method = RequestMethod.GET)
-public String editProduct(@RequestParam("id") int id,Model model){
-    Optional<Product> productEdit = productModel.findById(id);
-    productEdit.ifPresent(product -> model.addAttribute("product",product));
-    return "product-form-edit";
-}
+
+    @RequestMapping(value = "/product/edit", method = RequestMethod.GET)
+    public String editProduct(@RequestParam("id") int id, Model model) {
+        Optional<Product> productEdit = productModel.findById(id);
+        productEdit.ifPresent(product -> model.addAttribute("product", product));
+        return "product-form-edit";
+    }
 
     @RequestMapping(path = "/product/delete/{id}", method = RequestMethod.POST)
     public String deleteProduct(@PathVariable int id) {

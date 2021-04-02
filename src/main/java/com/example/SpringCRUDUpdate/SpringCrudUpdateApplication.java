@@ -15,25 +15,30 @@ import java.util.Locale;
 @SpringBootApplication
 public class SpringCrudUpdateApplication implements WebMvcConfigurer {
 
-	private int maxUploadSizeInMb = 10 * 1024 * 1024;
-	public static void main(String[] args) {
-		SpringApplication.run(SpringCrudUpdateApplication.class, args);
-	}
+    private int maxUploadSizeInMb = 10 * 1024 * 1024;
 
-	@Bean
-	public LocaleResolver localeResolver() {
-		SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-		sessionLocaleResolver.setDefaultLocale(Locale.US);
-		return sessionLocaleResolver;
-	}
-	@Bean
-	public LocaleChangeInterceptor localeChangeInterceptor() {
-		LocaleChangeInterceptor lci
-				= new LocaleChangeInterceptor();
-		lci.setParamName("lang");
-		return lci;
-	}
-	@Override
-	public  void  addInterceptors(InterceptorRegistry registry){registry.addInterceptor(localeChangeInterceptor());}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringCrudUpdateApplication.class, args);
+    }
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+        sessionLocaleResolver.setDefaultLocale(Locale.US);
+        return sessionLocaleResolver;
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci
+                = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+    }
 
 }

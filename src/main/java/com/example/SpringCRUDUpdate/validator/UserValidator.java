@@ -1,6 +1,7 @@
 package com.example.SpringCRUDUpdate.validator;
 
 import com.example.SpringCRUDUpdate.entity.User;
+import com.example.SpringCRUDUpdate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -10,7 +11,7 @@ import org.springframework.validation.Validator;
 @Component
 public class UserValidator  implements Validator {
     @Autowired
-    private UserValidator userValidator;
+    private UserService userService;
     @Override
     public boolean supports(Class<?> aClass) {
         return User.class.equals(aClass);

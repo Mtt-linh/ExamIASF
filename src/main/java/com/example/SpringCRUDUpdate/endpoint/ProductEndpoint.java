@@ -15,20 +15,21 @@ import java.util.Optional;
 @RestController
 public class ProductEndpoint {
     @Autowired
-private ProductModel productModel;
-@RequestMapping(path = "/endpoint/product/delete/{id}", method = RequestMethod.DELETE)
-public ResponseEntity delete(@PathVariable int id) {
-    Optional<Product> optionalProduct = productModel.findById(id);
-    if (optionalProduct.isPresent()) {
-        Product product = optionalProduct.get();
-        product.setStatus(0);
-        productModel.save(product);
-        return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
-    } else {
-        return new ResponseEntity(new CustomErrorType("Unable to delete. Product with id " + id + " not found."),
-                HttpStatus.NOT_FOUND);
+    private ProductModel productModel;
+
+    @RequestMapping(path = "/endpoint/product/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity delete(@PathVariable int id) {
+        Optional<Product> optionalProduct = productModel.findById(id);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setStatus(0);
+            productModel.save(product);
+            return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(new CustomErrorType("Unable to delete. Product with id " + id + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
     }
-}
 
     @RequestMapping(path = "/endpoint/product/delete-many", method = RequestMethod.DELETE)
     public ResponseEntity delete(@RequestBody String ids) throws UnsupportedEncodingException {
@@ -45,5 +46,4 @@ public ResponseEntity delete(@PathVariable int id) {
         productModel.saveAll(list);
         return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
     }
-
 }

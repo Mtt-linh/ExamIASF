@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 
 @Service
-public class UserServicelmpl implements  UserService{
+public class UserServicelmpl implements  UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -27,6 +28,6 @@ public class UserServicelmpl implements  UserService{
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUserName(username);
+        return userRepository.findByUsername(username);
     }
 }

@@ -11,15 +11,16 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-private int id;
-@NotBlank(message = "Tên không thể để trống.")
-@Size(min = 8, message = "Tên phải dài hơn 8 ký tự.")
-private String name;
+    private int id;
+    @NotBlank(message = "Tên không thể để trống.")
+    @Size(min = 8, message = "Tên phải dài hơn 8 ký tự.")
+    private String name;
     private String imgUrl;
-@Min(1)
-private int price;
+    @Min(1)
+    private int price;
     private long createdTime;
     private int status; // 1. Đang bán 2. Dừng bán 0. Đã xoá.
 
